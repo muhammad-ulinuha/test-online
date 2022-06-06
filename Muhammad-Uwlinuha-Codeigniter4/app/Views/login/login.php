@@ -22,7 +22,7 @@
             </div>
             <?php } ?>
             <form method="post"  action="<?= base_url('LoginAdmin/auth') ?>">
-                <h1 class="h3 mb-3 font-weight-normal text-center">Login Admin</h1>
+                <h1 class="h3 mb-3 font-weight-normal text-center">Login</h1>
                 <div class="form-group m-4 mt-5">
                 <h5>Username</h5>
                 <input type="text" class="form-control" name="username" id="username" required="" placeholder="Masukkan Username">
