@@ -18,16 +18,17 @@ class LoginAdmin extends BaseController
 		}
 		$model = new PostModel;
 		$data['username']  = session()->get('username');
+		$data['role']  = session()->get('role');
         $data['getPost'] = $model->getPost();
 		echo view('admin/post',$data);
     }
-
 
     public function auth(){
         $usersModel = new AdminModel();
 		$username = $this->request->getPost('username');
 	    $password = $this->request->getPost('password');
 	    $user = $usersModel->where('username', $username)->first();
+
 
 	    if(empty($user)){
 	    	session()->setFlashdata('message', 'Username atau Password Salah');
@@ -38,9 +39,27 @@ class LoginAdmin extends BaseController
 	    	session()->setFlashdata('message', 'Username atau Password Salah');
 	    	return redirect()->to('admin/login');
 	    }
+		// $role = $usersModel->where('role',$user['role']);
+		$role = $usersModel->getRole($user['role']);
 
-	    session()->set('username',$username);
-	    return redirect()->to('admin/admin');
+		// print_r($role);
+		foreach($role as $r){
+			$datarole = $r['role'];
+		}
+		if($datarole=="admin"){
+			session()->set('username',$username);
+			session()->set('role',$datarole);
+	    	return redirect()->to('admin/admin');
+		}elseif($datarole=="author"){
+			session()->set('username',$username);
+			session()->set('role',$datarole);
+	    	return redirect()->to('admin/author');
+		}else{
+			session()->setFlashdata('message', 'Anda tidak berhak masuk');
+	    	return redirect()->to('admin/login');
+		}
+
+	    
 	}
     
 	public function logout(){
@@ -58,6 +77,17 @@ class LoginAdmin extends BaseController
         return view('admin/beranda',$data);
     }
     
+	
+	// public function author()
+	// {
+    //     if(!session()->has('username')){
+	// 		return redirect()->to('admin/login');
+	// 	}
+	// 	$model = new PostModel;
+	// 	$data['username']  = session()->get('username');
+    //     $data['getPost'] = $model->getPost();
+	// 	echo view('admin/post',$data);
+    // }
 	//--------------------------------------------------------------------
 
 }

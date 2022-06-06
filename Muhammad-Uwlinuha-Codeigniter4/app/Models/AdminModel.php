@@ -6,6 +6,11 @@ class AdminModel extends Model
 {
     protected $table = "account";
     protected $primaryKey = 'username';
-    protected $rule = 'rule';
+
+    public function getRole($id){
+        $builder = $this->db->table($this->table);
+        $builder->where('role', $id);
+        return $builder->get()->getResultArray();
+    }
     
 }

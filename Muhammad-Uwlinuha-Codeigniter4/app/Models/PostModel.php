@@ -16,6 +16,12 @@ class PostModel extends Model
         }
     }
 
+    public function getPostAuthor($id = false){
+        $builder = $this->db->table($this->table);
+        $builder->where('username', $id);
+        return $builder->get()->getResultArray();
+    }
+
     public function savePost($data)
     {
         $builder = $this->db->table($this->table);
@@ -33,10 +39,5 @@ class PostModel extends Model
     {
         $builder = $this->db->table($this->table);
         return $builder->delete(['idpost' => $id]);
-    }
-
-    public function jmlCriteria($id=false)
-    {
-        return $this->getWhere(['idpost'=>$id])->rowCount();
     }
 }

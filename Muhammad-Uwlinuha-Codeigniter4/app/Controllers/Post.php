@@ -30,10 +30,19 @@ class Post extends BaseController
             'username' => session()->get('username')
         );
         $model->savePost($data);
-        echo '<script>
+		$role  = session()->get('role');
+        if($role!='author'){
+            echo '<script>
                 alert("Sukses Tambah Data Post");
                 window.location="'.base_url('admin/post').'"
             </script>';
+        }else{
+            echo '<script>
+            alert("Sukses Tambah Data Post");
+            window.location="'.base_url('admin/authorpost').'"
+        </script>';
+        }
+        
     }
 
     public function edit()
@@ -48,30 +57,35 @@ class Post extends BaseController
 
         );
         $model->editPost($data,$id);
-        echo '<script>
-                alert("Sukses Edit Data");
+        $role  = session()->get('role');
+        if($role!='author'){
+            echo '<script>
+                alert("Sukses Edit Data Post");
                 window.location="'.base_url('admin/post').'"
             </script>';
+        }else{
+            echo '<script>
+            alert("Sukses Edit Data Post");
+            window.location="'.base_url('admin/authorpost').'"
+        </script>';
+        }
     }
 
     public function delete($id)
     {
         $model = new PostModel();
-        $getCriteria = $model->getPost($id)->getRow();
-        if(isset($getCriteria))
-        {
-            $model->deletePost($id);
+        $model->deletePost($id);
+        $role  = session()->get('role');
+        if($role!='author'){
             echo '<script>
-                    alert("Hapus Data Sukses");
-                    window.location="'.base_url('admin/post').'"
-                </script>';
-
+                alert("Sukses Tambah Delete Post");
+                window.location="'.base_url('admin/post').'"
+            </script>';
         }else{
-
             echo '<script>
-                    alert("Hapus Gagal !, ID Post '.$id.' Tidak ditemukan");
-                    window.location="'.base_url('admin/post').'"
-                </script>';
+            alert("Sukses Tambah Delete Post");
+            window.location="'.base_url('admin/authorpost').'"
+        </script>';
         }
     }
 

@@ -5,7 +5,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1 class="text-center mt-5">Post</h1>
+				<div class="card mt-4 bg-secondary"><h1 class="text-center text-white m-4">Post</h1></div>
+				
 				<hr>
 			
 				<div class="row">

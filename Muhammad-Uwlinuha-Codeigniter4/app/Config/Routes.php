@@ -37,6 +37,9 @@ $routes->get('/beranda', 'Home::beranda');
 $routes->group('admin', function ($routes) {
     $routes->get('login', 'LoginAdmin::index');
     $routes->get('admin', 'LoginAdmin::admin');
+    $routes->get('author', 'Author::author');
+    $routes->get('authorberanda', 'Author::beranda');
+    $routes->get('authorpost', 'Author::post');
     $routes->get('dashboard', 'LoginAdmin::beranda');
     $routes->get('post', 'post::post');
     $routes->get('akun', 'akun::akun');
